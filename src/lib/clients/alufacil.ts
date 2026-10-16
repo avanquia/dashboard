@@ -34,8 +34,6 @@ const cmp = inSection("Compliance");
 const harness: Card[] = [
   har("HAR-01", "Dependabot configurado", "Feito", "Ambos", null,
     ".github/dependabot.yml já existia nos dois repos."),
-  har("HAR-02", "CLIs instaladas (gh, vercel, supabase)", "Feito", null, null,
-    "gh 2.102.0 (logado como isaquebock), vercel 64.3.1 e supabase 2.121.0 instalados em ~/.local/bin. Vercel e Supabase ainda sem login."),
   har("HAR-03", "Regras de isolamento no AGENTS.md da Plataforma", "Feito", "Plataforma", null,
     "O AGENTS.md da Plataforma já documenta o isolamento da Central (sem código de domínio compartilhado, Supabase dedicado, auth por tabela-perfil)."),
   har("HAR-04", ".env.example da Plataforma", "Feito", "Plataforma", null,
