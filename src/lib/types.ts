@@ -53,7 +53,7 @@ export type Board = {
 export type Client = {
   slug: string;
   name: string;
-  /** Env var that holds this client's access password. */
-  passwordEnv: string;
+  /** Access password for this client's board. */
+  password: string;
   board: Board;
 };

@@ -240,7 +240,7 @@ const compliance: Card[] = [
 export const alufacil: Client = {
   slug: "alufacil",
   name: "Alufácil",
-  passwordEnv: "ALUFACIL_PASSWORD",
+  password: "guicolpo",
   board: {
     title: "Harness, Security e Compliance",
     description:
