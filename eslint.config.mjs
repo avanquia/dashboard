@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored coss UI registry code (managed by `shadcn add`).
+    "src/components/ui/**",
+    "src/hooks/use-composer-editor.ts",
+    "src/lib/composer-*.ts",
   ]),
 ]);
 
