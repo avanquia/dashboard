@@ -51,17 +51,16 @@ export function KanbanBoard({ board }: { board: Board }) {
   const visible = section ? board.cards.filter((c) => c.section === section) : board.cards;
   const done = visible.filter((c) => c.column === "done").length;
   const pct = visible.length ? Math.round((done / visible.length) * 100) : 0;
-  const sectionInfo = board.sections?.find((s) => s.name === section);
 
   return (
     <>
       {board.sections && board.sections.length > 0 && (
         <div className="step-in mb-6 grid grid-cols-2 gap-2 lg:grid-cols-4">
           {[
-            { name: null as string | null, label: "Todos", description: "Visão geral de todas as frentes da consultoria." },
-            ...board.sections.map((s) => ({ name: s.name, label: s.name, description: s.description })),
+            { name: null as string | null, label: "Todos" },
+            ...board.sections.map((s) => ({ name: s.name, label: s.name })),
           ].map(
-            ({ name, label, description }) => {
+            ({ name, label }) => {
               const cards = name ? board.cards.filter((c) => c.section === name) : board.cards;
               const ok = cards.filter((c) => c.column === "done").length;
               const active = section === name;
@@ -72,7 +71,7 @@ export function KanbanBoard({ board }: { board: Board }) {
                   aria-pressed={active}
                   onClick={() => setSection(name)}
                   className={cn(
-                    "flex flex-col justify-start gap-1 rounded-xl border p-3 text-start outline-none transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring",
+                    "flex flex-col gap-1 rounded-xl border p-3 text-start outline-none transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring",
                     active ? "border-foreground/20 bg-accent" : "bg-card/40",
                   )}
                 >
@@ -81,9 +80,6 @@ export function KanbanBoard({ board }: { board: Board }) {
                     {ok}
                     <span className="text-muted-foreground text-sm">/{cards.length}</span>
                   </span>
-                  {description && (
-                    <span className="mt-1 hidden text-muted-foreground text-xs leading-relaxed sm:block">{description}</span>
-                  )}
                 </button>
               );
             },
@@ -97,9 +93,6 @@ export function KanbanBoard({ board }: { board: Board }) {
           <span className="font-mono tabular-nums">{pct}%</span>
         </div>
         <Progress value={pct} aria-label="Progresso" />
-        {sectionInfo?.description && (
-          <p className="text-muted-foreground text-xs leading-relaxed sm:hidden">{sectionInfo.description}</p>
-        )}
       </div>
 
       <BoardCharts board={board} cards={visible} />

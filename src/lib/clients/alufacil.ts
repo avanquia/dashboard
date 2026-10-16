@@ -252,28 +252,21 @@ export const alufacil: Client = {
     sections: [
       {
         name: "Harness",
-        description:
-          "Testes automáticos, CI, proteção da branch principal e regras para agentes de IA. É a rede de segurança do desenvolvimento: garante que um erro nos cálculos de cobrança, uma migration quebrada ou um comando perigoso seja barrado antes de chegar à produção.",
+        what: "Testes automáticos, CI, proteção da branch principal e regras para os agentes de IA que escrevem código.",
+        why: "É a rede de segurança do desenvolvimento. Um erro no cálculo de cobrança, uma migration quebrada ou um comando destrutivo é barrado antes de chegar à produção, e não descoberto pelo cliente.",
       },
       {
         name: "Security",
-        description:
-          "Correção de vulnerabilidades, MFA, proteção de login, CSP e configuração do Supabase e da Vercel. Os sistemas guardam CPF, dados financeiros e acesso a pagamentos; uma falha aqui expõe clientes e a operação a fraude e vazamento.",
+        what: "Correção de vulnerabilidades, MFA, proteção de login, CSP e configuração segura do Supabase e da Vercel.",
+        why: "Os sistemas guardam CPF, dados financeiros e acesso a pagamentos. Uma falha aqui expõe inquilinos e a operação a vazamento e fraude.",
       },
       {
         name: "Compliance",
-        description:
-          "Adequação à LGPD: encarregado (DPO), política de privacidade, avisos, contratos com fornecedores e direitos do titular. Reduz o risco de multas e sanções da ANPD e dá transparência a inquilinos e parceiros. Não substitui parecer jurídico.",
+        what: "Adequação à LGPD: encarregado (DPO), política de privacidade, avisos, contratos com fornecedores e direitos do titular.",
+        why: "Reduz o risco de multas e sanções da ANPD e dá transparência a inquilinos e parceiros sobre como seus dados são usados.",
+        note: "Não substitui parecer jurídico; base legal e redação de política devem passar por advogado ou pelo DPO.",
       },
     ],
-    notes: {
-      title: "Limites",
-      items: [
-        "Análise estática do código e do histórico git. Os painéis do Supabase, da Vercel e do GitHub não foram acessados (SEC-24, SEC-25, HAR-13 dependem disso).",
-        "Não houve pentest nem execução dos apps.",
-        "RLS conferido pela leitura das migrations; o banco real pode divergir se alguma não foi aplicada (HAR-16).",
-      ],
-    },
     cards: [...harness, ...security, ...compliance],
   },
 };

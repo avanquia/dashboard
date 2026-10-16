@@ -46,7 +46,15 @@ export type Board = {
   /** Columns shown on this board, in order. Defaults to COLUMNS. */
   columns?: Column[];
   /** Ordered list of sections for the filter; omitted hides the filter. */
-  sections?: { name: string; description?: string }[];
+  sections?: {
+    name: string;
+    /** What this front covers. */
+    what?: string;
+    /** Why it matters to the client. */
+    why?: string;
+    /** Caveat shown under the explanation. */
+    note?: string;
+  }[];
   /** Caveats shown under the board. */
   notes?: { title: string; items: string[] };
   cards: Card[];

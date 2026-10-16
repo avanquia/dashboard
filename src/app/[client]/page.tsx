@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { AsciiBackdrop } from "@/components/ascii-backdrop";
 import { BoardPlaceholder, KanbanBoard } from "@/components/board/kanban-board";
 import { Deadline } from "@/components/board/deadline";
+import { SectionGuide } from "@/components/board/section-guide";
 import { LockButton } from "@/components/board/lock-button";
 import { PasswordGate } from "@/components/board/password-gate";
 import { isAuthorized } from "@/lib/auth";
@@ -66,6 +67,7 @@ async function Gate({ slug }: { slug: string }) {
         <span>Atualizado em {updated}</span>
         <LockButton slug={client.slug} />
       </div>
+      {client.board.sections && <SectionGuide sections={client.board.sections} />}
       <KanbanBoard board={client.board} />
     </>
   );
