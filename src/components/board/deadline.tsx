@@ -39,7 +39,7 @@ export function Deadline({ date }: { date: string }) {
             : `${-days} ${days === -1 ? "dia" : "dias"} de atraso`;
 
   return (
-    <div className="step-in flex shrink-0 flex-col items-end gap-1 rounded-xl border bg-card/40 px-4 py-3 text-end">
+    <div className="step-in flex shrink-0 items-center justify-between gap-3 rounded-xl border bg-card/40 px-4 py-3 sm:flex-col sm:items-end sm:justify-start sm:gap-1 sm:text-end">
       <span className="inline-flex items-center gap-1.5 text-muted-foreground text-xs">
         <FlagIcon className="size-3" />
         Deadline

@@ -24,7 +24,7 @@ export default async function ClientPage({ params }: PageProps<"/[client]">) {
 
   return (
     <main className="grain relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-8 sm:px-8 sm:py-12">
-      <header className="relative mb-10 flex items-start justify-between gap-4">
+      <header className="relative mb-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
         <AsciiBackdrop />
         <div className="flex flex-col gap-2">
           <p className="text-muted-foreground text-sm tracking-wide">Avanquia</p>

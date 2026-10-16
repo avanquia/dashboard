@@ -56,9 +56,12 @@ export function KanbanBoard({ board }: { board: Board }) {
   return (
     <>
       {board.sections && board.sections.length > 0 && (
-        <div className="step-in mb-6 grid grid-cols-2 gap-2 sm:grid-cols-4">
-          {[{ name: null as string | null, label: "Todos" }, ...board.sections.map((s) => ({ name: s.name, label: s.name }))].map(
-            ({ name, label }) => {
+        <div className="step-in mb-6 grid grid-cols-2 gap-2 lg:grid-cols-4">
+          {[
+            { name: null as string | null, label: "Todos", description: "Visão geral de todas as frentes da consultoria." },
+            ...board.sections.map((s) => ({ name: s.name, label: s.name, description: s.description })),
+          ].map(
+            ({ name, label, description }) => {
               const cards = name ? board.cards.filter((c) => c.section === name) : board.cards;
               const ok = cards.filter((c) => c.column === "done").length;
               const active = section === name;
@@ -69,7 +72,7 @@ export function KanbanBoard({ board }: { board: Board }) {
                   aria-pressed={active}
                   onClick={() => setSection(name)}
                   className={cn(
-                    "flex flex-col gap-1 rounded-xl border p-3 text-start outline-none transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring",
+                    "flex flex-col justify-start gap-1 rounded-xl border p-3 text-start outline-none transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring",
                     active ? "border-foreground/20 bg-accent" : "bg-card/40",
                   )}
                 >
@@ -78,6 +81,9 @@ export function KanbanBoard({ board }: { board: Board }) {
                     {ok}
                     <span className="text-muted-foreground text-sm">/{cards.length}</span>
                   </span>
+                  {description && (
+                    <span className="mt-1 hidden text-muted-foreground text-xs leading-relaxed sm:block">{description}</span>
+                  )}
                 </button>
               );
             },
@@ -92,7 +98,7 @@ export function KanbanBoard({ board }: { board: Board }) {
         </div>
         <Progress value={pct} aria-label="Progresso" />
         {sectionInfo?.description && (
-          <p className="text-muted-foreground text-xs leading-relaxed">{sectionInfo.description}</p>
+          <p className="text-muted-foreground text-xs leading-relaxed sm:hidden">{sectionInfo.description}</p>
         )}
       </div>
 

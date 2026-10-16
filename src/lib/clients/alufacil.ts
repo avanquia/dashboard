@@ -250,12 +250,20 @@ export const alufacil: Client = {
       { id: "done", title: "Feito", hint: "Nada concluído ainda" },
     ],
     sections: [
-      { name: "Harness" },
-      { name: "Security" },
+      {
+        name: "Harness",
+        description:
+          "Testes automáticos, CI, proteção da branch principal e regras para agentes de IA. É a rede de segurança do desenvolvimento: garante que um erro nos cálculos de cobrança, uma migration quebrada ou um comando perigoso seja barrado antes de chegar à produção.",
+      },
+      {
+        name: "Security",
+        description:
+          "Correção de vulnerabilidades, MFA, proteção de login, CSP e configuração do Supabase e da Vercel. Os sistemas guardam CPF, dados financeiros e acesso a pagamentos; uma falha aqui expõe clientes e a operação a fraude e vazamento.",
+      },
       {
         name: "Compliance",
         description:
-          "Lacunas técnicas e documentais de LGPD. Não substitui parecer jurídico; base legal e redação de política devem passar por advogado ou encarregado (DPO).",
+          "Adequação à LGPD: encarregado (DPO), política de privacidade, avisos, contratos com fornecedores e direitos do titular. Reduz o risco de multas e sanções da ANPD e dá transparência a inquilinos e parceiros. Não substitui parecer jurídico.",
       },
     ],
     notes: {
