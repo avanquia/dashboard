@@ -2,12 +2,13 @@ import type { Card, Client, Priority } from "@/lib/types";
 
 type Status = "Feito" | "Em revisão" | "Não feito";
 
-// Target completion dates, staged up to the 31/10 deadline. Done cards have none.
-const DUE_IN_REVIEW = "2026-10-20";
+// Target completion dates, staged to finish by 29/10 so 30–31/10 stay free for
+// final validation before the 31/10 deadline. Done cards have none.
+const DUE_IN_REVIEW = "2026-10-19";
 const DUE_BY_PRIORITY: Record<Priority, string> = {
-  P0: "2026-10-23",
-  P1: "2026-10-28",
-  P2: "2026-10-31",
+  P0: "2026-10-22",
+  P1: "2026-10-26",
+  P2: "2026-10-29",
 };
 
 function dueDate(status: Status, priority: Priority | null): string | undefined {
