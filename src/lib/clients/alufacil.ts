@@ -1,6 +1,8 @@
 import type { Card, Client, Priority } from "@/lib/types";
 
-type Status = "Feito" | "Não feito";
+type Status = "Feito" | "Em revisão" | "Não feito";
+
+const STATUS_COLUMN = { Feito: "done", "Em revisão": "review", "Não feito": "backlog" } as const;
 
 function card(
   section: string,
@@ -16,7 +18,7 @@ function card(
     id,
     section,
     title,
-    column: status === "Feito" ? "done" : "backlog",
+    column: STATUS_COLUMN[status],
     repo: repo ?? undefined,
     priority: priority ?? undefined,
     details,
@@ -101,11 +103,11 @@ const harness: Card[] = [
 ];
 
 const security: Card[] = [
-  sec("SEC-01", "Atualizar Next para 16.3.8", "Feito", "Ambos", "P0",
-    "O Next 16.3.4 tinha RCE no next/og, SSRF no image optimizer e cache poisoning. Atualizado para 16.3.8 com npm audit fix (0 vulnerabilidades). Está nas PRs #14 e #15. Só chega em produção com SEC-13."),
-  sec("SEC-02", "Content-Security-Policy", "Feito", "Ambos", "P0",
-    "CSP em next.config.ts restringindo connect, img, frame, object-src, base-uri, form-action e frame-ancestors. Está nas PRs #14/#15. Validar com SEC-15."),
-  sec("SEC-03", "Rate-limit nas ações públicas da Plataforma", "Feito", "Plataforma", "P0",
+  sec("SEC-01", "Atualizar Next para 16.3.8", "Em revisão", "Ambos", "P0",
+    "O Next 16.3.4 tinha RCE no next/og, SSRF no image optimizer e cache poisoning. Atualizado para 16.3.8 com npm audit fix (0 vulnerabilidades). Está nas PRs #14 (Central, mergeada) e #15 (Plataforma, aberta). Só chega em produção na Plataforma com SEC-13."),
+  sec("SEC-02", "Content-Security-Policy", "Em revisão", "Ambos", "P0",
+    "CSP em next.config.ts restringindo connect, img, frame, object-src, base-uri, form-action e frame-ancestors. Está nas PRs #14 (Central, mergeada) e #15 (Plataforma, aberta). Validar com SEC-15."),
+  sec("SEC-03", "Rate-limit nas ações públicas da Plataforma", "Em revisão", "Plataforma", "P0",
     "src/lib/rate-limit.ts aplicado no cadastro de parceria, upload, convite e pagamento/retorno da proposta, com a migration 0110_rate_hits.sql. Está na PR #15. Só funciona com SEC-14."),
   sec("SEC-04", "Rate-limit nas ações públicas da Central", "Feito", "Central", null,
     "Já existia (rate_hits, migration 0097) no cancelamento público, na IA da Faculdade e na negociação."),
@@ -125,8 +127,8 @@ const security: Card[] = [
     "Tipo, tamanho e categoria validados. O path é gerado no servidor com UUID."),
   sec("SEC-12", "Varredura de segredos no histórico git", "Feito", "Ambos", null,
     "Busca por padrões de chave (Anthropic, Supabase, Asaas, AWS, JWT, chave privada) em todo o histórico. Nada encontrado."),
-  sec("SEC-13", "Merge das PRs #14 e #15", "Não feito", "Ambos", "P0",
-    "Enquanto as PRs não entram na main, produção segue com o Next vulnerável e sem CSP. Depende de SEC-14 e SEC-15.",
+  sec("SEC-13", "Merge das PRs #14 e #15", "Em revisão", "Ambos", "P0",
+    "A PR #14 da Central já foi mergeada. Falta a #15 da Plataforma: enquanto ela não entra na main, a produção da Plataforma segue com o Next vulnerável e sem CSP. Depende de SEC-14 e SEC-15.",
     "As duas PRs estão mergeadas e o deploy de produção roda o Next 16.3.8."),
   sec("SEC-14", "Rodar a migration 0110 na Plataforma", "Não feito", "Plataforma", "P0",
     "Colar supabase/migrations/0110_rate_hits.sql no SQL Editor do Supabase da Plataforma e rodar. Sem a tabela, o rate-limit fica desligado.",
@@ -134,8 +136,8 @@ const security: Card[] = [
   sec("SEC-15", "Testar a CSP no preview da Vercel", "Não feito", "Ambos", "P0",
     "Navegar no preview das PRs (cadastro, proposta, Mesa, Central) com o console aberto. Se algum recurso externo for bloqueado, liberar o domínio na CSP.",
     "Nenhum erro de CSP no console nos fluxos principais."),
-  sec("SEC-16", "Corrigir XSS no markdown da Faculdade Alu", "Não feito", "Central", "P0",
-    `Em src/lib/markdown.ts, esc() não escapa aspas e o regex do link aceita ". Assim, [x](https://a"onmouseover="alert(1)) injeta atributo. Atinge os manuais e as respostas da IA. Corrigir escapando " e ' e trocando o regex da URL para [^\\s)"'<>]+.`,
+  sec("SEC-16", "Corrigir XSS no markdown da Faculdade Alu", "Em revisão", "Central", "P0",
+    `Em src/lib/markdown.ts, esc() não escapa aspas e o regex do link aceita ". Assim, [x](https://a"onmouseover="alert(1)) injeta atributo. Atinge os manuais e as respostas da IA. Corrigir escapando " e ' e trocando o regex da URL para [^\\s)"'<>]+. A correção está na PR #8 da Central, aberta.`,
     "O payload acima renderiza como texto, com teste cobrindo o caso."),
   sec("SEC-17", "MFA obrigatório na Plataforma em produção", "Não feito", "Plataforma", "P0",
     "O MFA só liga se MFA_OBRIGATORIO, MFA_MESA_OBRIGATORIO ou MFA_CORRETOR_OBRIGATORIO valem 1. O padrão é desligado. Confirmar na Vercel; no mínimo a Mesa deve ter MFA obrigatório. Considerar inverter o padrão.",
@@ -241,8 +243,10 @@ export const alufacil: Client = {
     description:
       "Backlog dos repositórios CENTRAL-ALUFACIL (Central) e alufacil-plataforma (Plataforma). Prioridades: P0 urgente, P1 próximo ciclo, P2 depois.",
     updatedAt: "2026-10-15",
+    deadline: "2026-10-31",
     columns: [
       { id: "backlog", title: "Não feito", hint: "Nada pendente" },
+      { id: "review", title: "Em revisão", hint: "Nenhuma PR aberta" },
       { id: "done", title: "Feito", hint: "Nada concluído ainda" },
     ],
     sections: [

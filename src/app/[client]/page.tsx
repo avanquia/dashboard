@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { AsciiBackdrop } from "@/components/ascii-backdrop";
 import { BoardPlaceholder, KanbanBoard } from "@/components/board/kanban-board";
+import { Deadline } from "@/components/board/deadline";
 import { LockButton } from "@/components/board/lock-button";
 import { PasswordGate } from "@/components/board/password-gate";
 import { isAuthorized } from "@/lib/auth";
@@ -32,6 +33,7 @@ export default async function ClientPage({ params }: PageProps<"/[client]">) {
             <p className="max-w-xl text-[15px] text-muted-foreground leading-relaxed">{client.board.description}</p>
           )}
         </div>
+        {client.board.deadline && <Deadline date={client.board.deadline} />}
       </header>
 
       <Suspense fallback={<BoardPlaceholder />}>

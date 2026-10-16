@@ -41,6 +41,8 @@ export type Board = {
   title: string;
   description?: string;
   updatedAt: string;
+  /** ISO date (yyyy-mm-dd) the engagement is due. */
+  deadline?: string;
   /** Columns shown on this board, in order. Defaults to COLUMNS. */
   columns?: Column[];
   /** Ordered list of sections for the filter; omitted hides the filter. */
