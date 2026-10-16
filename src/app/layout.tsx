@@ -20,8 +20,8 @@ const serif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Avanquia",
-  description: "Avanquia — consultoria de IA para empresas.",
+  title: "Avanquia — Painel",
+  description: "Avanquia — acompanhe a evolução da sua consultoria.",
 };
 
 export const viewport: Viewport = {
