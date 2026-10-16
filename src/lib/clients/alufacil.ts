@@ -237,7 +237,7 @@ export const alufacil: Client = {
   name: "Alufácil",
   password: "guicolpo",
   board: {
-    title: "Harness, Security e Compliance",
+    title: "Alufácil",
     description:
       "Backlog dos repositórios CENTRAL-ALUFACIL (Central) e alufacil-plataforma (Plataforma). Prioridades: P0 urgente, P1 próximo ciclo, P2 depois.",
     updatedAt: "2026-10-15",
