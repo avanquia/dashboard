@@ -35,7 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="pt-BR"
       className={cn("dark h-full antialiased", geistSans.variable, geistMono.variable, serif.variable)}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col overflow-x-clip">{children}</body>
     </html>
   );
 }

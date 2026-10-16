@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { AsciiBackdrop } from "@/components/ascii-backdrop";
 import { BoardPlaceholder, KanbanBoard } from "@/components/board/kanban-board";
 import { LockButton } from "@/components/board/lock-button";
 import { PasswordGate } from "@/components/board/password-gate";
@@ -21,10 +22,11 @@ export default async function ClientPage({ params }: PageProps<"/[client]">) {
   if (!client) notFound();
 
   return (
-    <main className="grain relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-8 sm:px-8 sm:py-12">
-      <header className="mb-10 flex items-start justify-between gap-4">
+    <main className="grain relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-8 sm:px-8 sm:py-12">
+      <header className="relative mb-10 flex items-start justify-between gap-4">
+        <AsciiBackdrop />
         <div className="flex flex-col gap-2">
-          <p className="text-muted-foreground text-sm tracking-wide">Avanquia · {client.name}</p>
+          <p className="text-muted-foreground text-sm tracking-wide">Avanquia</p>
           <h1 className="font-serif text-4xl tracking-tight sm:text-5xl">{client.board.title}</h1>
           {client.board.description && (
             <p className="max-w-xl text-[15px] text-muted-foreground leading-relaxed">{client.board.description}</p>
