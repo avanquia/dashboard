@@ -2,6 +2,7 @@
 
 import { CalendarIcon, CheckIcon, FolderGit2Icon } from "lucide-react";
 import { useState } from "react";
+import { BoardCharts } from "@/components/board/board-charts";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -94,6 +95,8 @@ export function KanbanBoard({ board }: { board: Board }) {
           <p className="text-muted-foreground text-xs leading-relaxed">{sectionInfo.description}</p>
         )}
       </div>
+
+      <BoardCharts board={board} cards={visible} />
 
       <div
         className={cn(
