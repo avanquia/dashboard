@@ -2,6 +2,20 @@ import type { Card, Client, Priority } from "@/lib/types";
 
 type Status = "Feito" | "Em revisão" | "Não feito";
 
+// Target completion dates, staged up to the 31/10 deadline. Done cards have none.
+const DUE_IN_REVIEW = "2026-10-20";
+const DUE_BY_PRIORITY: Record<Priority, string> = {
+  P0: "2026-10-23",
+  P1: "2026-10-28",
+  P2: "2026-10-31",
+};
+
+function dueDate(status: Status, priority: Priority | null): string | undefined {
+  if (status === "Feito") return undefined;
+  if (status === "Em revisão") return DUE_IN_REVIEW;
+  return priority ? DUE_BY_PRIORITY[priority] : undefined;
+}
+
 const STATUS_COLUMN = { Feito: "done", "Em revisão": "review", "Não feito": "backlog" } as const;
 
 function card(
@@ -23,6 +37,7 @@ function card(
     priority: priority ?? undefined,
     details,
     doneWhen,
+    due: dueDate(status, priority),
   };
 }
 
